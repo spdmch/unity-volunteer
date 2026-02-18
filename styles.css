@@ -37,14 +37,16 @@ body {
 }
 
 header {
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.97);
     padding: 18px 40px;
     text-align: center;
     border-bottom: 1px solid var(--border);
-    position: static;   /* ← важливо */
+    position: static;
     top: auto;
+    z-index: auto;
     box-shadow: 0 4px 24px rgba(26, 10, 60, 0.08);
-    z-index: auto;   
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 header img {
@@ -64,9 +66,6 @@ header h1 {
 nav {
     background: transparent;
     padding: 14px 0 20px 0;
-    position: static;   /* ← важливо */
-    top: auto;
-    z-index: auto;
 }
 
 nav ul {
@@ -381,6 +380,8 @@ footer::before {
     letter-spacing: 0.02em;
 }
 
+/* ===== МОЇ ІНІЦІАТИВИ ===== */
+
 .my-initiatives-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -501,26 +502,21 @@ footer::before {
     color: var(--primary);
 }
 
+/* ===== АНІМАЦІЇ ===== */
+
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ===== АДАПТИВ ===== */
+
 @media (max-width: 768px) {
     header {
         padding: 14px 20px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
     }
 
     header h1 { font-size: 1.1rem; }
-
-    body {
-        padding-top: 170px;
-    }
 
     .initiatives-grid {
         flex-direction: column;
@@ -548,14 +544,8 @@ footer::before {
 }
 
 @media (max-width: 480px) {
-    body {
-        padding-top: 190px;
-    }
-
     .filter-controls button {
         padding: 7px 18px !important;
         font-size: 0.78rem !important;
     }
 }
-
-
