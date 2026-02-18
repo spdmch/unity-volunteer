@@ -41,8 +41,10 @@ header {
     padding: 18px 40px;
     text-align: center;
     border-bottom: 1px solid var(--border);
-    position: static;
+    position: static;   /* ← важливо */
+    top: auto;
     box-shadow: 0 4px 24px rgba(26, 10, 60, 0.08);
+    z-index: auto;   
 }
 
 header img {
@@ -62,6 +64,9 @@ header h1 {
 nav {
     background: transparent;
     padding: 14px 0 20px 0;
+    position: static;   /* ← важливо */
+    top: auto;
+    z-index: auto;
 }
 
 nav ul {
@@ -552,4 +557,5 @@ footer::before {
         font-size: 0.78rem !important;
     }
 }
+
 
