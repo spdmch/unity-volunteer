@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створити ініціативу | ВО Єдність</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <img src="logo1.png" alt="Логотип організації" width="100">
+    <h1>Волонтерська організація Єдність</h1>
+    <nav>
+        <ul>
+            <li><a href="projects.html">Доступні ініціативи</a></li>
+            <li><a href="my-projects.html">Мої ініціативи</a></li>
+            <li><a href="index.html">Про нас</a></li>
+            <li><a href = "form-initiative.html" class="active">Створити ініціативу</a></li>
+        </ul>
+    </nav>
+</header>
+ <main>
+        <section class="articles-section">
+            <h2>Створити ініціативу</h2>
+            <p>Заповніть форму нижче, щоб запропонувати нову волонтерську ініціативу. Ми розглянемо вашу пропозицію та зв'яжемося з вами для подальших кроків.</p>
+
+            <form class="initiative-form">
+                <label for="title">Назва ініціативи:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="date">Дата проведення:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="location">Місце проведення:</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="description">Опис ініціативи:</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+
+                <button type="submit" class="submit-btn">Надіслати ініціативу</button>
+            </form>

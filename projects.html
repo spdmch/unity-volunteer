@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступні ініціативи | ВО Єдність</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <img src="logo1.png" alt="Логотип організації" width="100">
+    <h1>Волонтерська організація Єдність</h1>
+    <nav>
+        <ul>
+            <li><a href="projects.html" class="active">Доступні ініціативи</a></li>
+            <li><a href="my-projects.html">Мої ініціативи</a></li>
+            <li><a href="index.html">Про нас</a></li>
+            <li><a href="form-initiative.html">Створити ініціативу</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="initiatives-header" style="text-align: center;">
+        <h2>Доступні ініціативи</h2>
+    <div class="filter-controls">
+    <button id="btn-active" onclick="filterProjects('active')" class="filter-btn">Актуальні</button>
+    <button id="btn-completed" onclick="filterProjects('completed')" class="filter-btn">Завершені</button>
+</div>
+    </section>
+
+    <div id="projects-container" class="initiatives-grid"></div>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <p><strong>Контакти:</strong> м. Київ, вул. Волонтерська, 10 | Тел: +38 (044) 123-45-67</p>
+        <p>Email: <a href="mailto:info@unity.org.ua">info@unity.org.ua</a></p>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 ВО "Єдність" | Працюємо заради перемоги
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    window.onload = function() {
+        filterProjects('active');
+    };
+</script>
+</body>
+</html>
