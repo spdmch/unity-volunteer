@@ -270,6 +270,12 @@ main {
 
 .join-btn:active, .submit-btn:active { transform: scale(0.98); }
 
+.create-initiative-section {
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
 .create-initiative-section, .news-article {
     background: var(--surface);
     padding: 36px;
@@ -566,4 +572,18 @@ textarea {
 .char-counter--over {
     color: #e53e3e;
     font-weight: 600;
+}
+
+#form-result {
+    margin-top: 24px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.form-success p {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
