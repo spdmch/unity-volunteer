@@ -56,6 +56,15 @@ function initToggleSection() {
     });
 }
 
+// Екранує HTML-спецсимволи, щоб уникнути XSS і проблем з відображенням
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
 function initFormValidation() {
     const form = document.querySelector('.initiative-form');
     if (!form) return;
@@ -105,17 +114,24 @@ function initFormValidation() {
         }
 
         if (errorMessage) {
-            resultBox.innerHTML = '<div class="form-error">⚠️ ' + errorMessage + '</div>';
+            resultBox.innerHTML = '<div class="form-error">⚠️ ' + escapeHtml(errorMessage) + '</div>';
         } else {
+            // ВИПРАВЛЕННЯ: використовуємо escapeHtml + truncate щоб текст не вилазив за межі
             resultBox.innerHTML =
                 '<div class="form-success">' +
                 '<h3>✅ Ініціативу надіслано!</h3>' +
-                '<p><strong>Назва:</strong> ' + truncate(title, 60) + '</p>' +
-                '<p><strong>Дата:</strong> ' + date + '</p>' +
-                '<p><strong>Місце:</strong> ' + truncate(location, 60) + '</p>' +
-                '<p><strong>Опис:</strong> ' + truncate(description, 150) + '</p>' +
+                '<p><strong>Назва:</strong> ' + escapeHtml(truncate(title, 60)) + '</p>' +
+                '<p><strong>Дата:</strong> ' + escapeHtml(date) + '</p>' +
+                '<p><strong>Місце:</strong> ' + escapeHtml(truncate(location, 60)) + '</p>' +
+                '<p><strong>Опис:</strong> ' + escapeHtml(truncate(description, 150)) + '</p>' +
                 '</div>';
             form.reset();
+            // Скидаємо лічильник символів
+            const counter = document.querySelector('.char-counter');
+            if (counter) {
+                counter.textContent = '0 / 300';
+                counter.classList.remove('char-counter--over');
+            }
         }
     });
 }
@@ -171,10 +187,8 @@ function filterProjects(status) {
         i++;
     }
 
-    
     applyCardStyles();
 
-    
     const cards = document.querySelectorAll('.card');
     for (let i = 0; i < cards.length; i++) {
         cards[i].addEventListener('mouseover', function () {
@@ -272,7 +286,6 @@ function displayMyInitiatives() {
         i++;
     }
 
-    
     applyCardStyles();
 }
 
@@ -306,23 +319,16 @@ window.addEventListener('DOMContentLoaded', () => {
         displayMyInitiatives();
     }
 
-    
     addNavHoverEffects();
-
-    
     initToggleSection();
-
-    
     initFormValidation();
 
-    
     const dateInput = document.getElementById('date');
     if (dateInput) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
     }
 
-    
     const descriptionInput = document.getElementById('description');
     if (descriptionInput) {
         const counter = document.createElement('div');
