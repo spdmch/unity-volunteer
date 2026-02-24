@@ -312,6 +312,7 @@ input[type="text"], input[type="date"], textarea {
     transition: all 0.25s ease;
     background-color: #faf9fd;
     color: var(--text-main);
+    box-sizing: border-box;
 }
 
 input:focus, textarea:focus {
@@ -551,6 +552,7 @@ footer::before {
         font-size: 0.78rem !important;
     }
 }
+
 textarea {
     resize: vertical;
     min-height: 100px;
@@ -574,6 +576,8 @@ textarea {
     font-weight: 600;
 }
 
+/* ===== ВИПРАВЛЕННЯ: #form-result не вилазить за межі ===== */
+
 #form-result {
     margin-top: 24px;
     word-break: break-word;
@@ -582,8 +586,52 @@ textarea {
     max-width: 100%;
 }
 
-.form-success p {
-    word-break: break-all;
+.form-success,
+.form-error {
+    word-break: break-word;
     overflow-wrap: break-word;
+    white-space: normal;
     max-width: 100%;
+    overflow: hidden;
+}
+
+.form-success p,
+.form-success h3 {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+}
+
+.form-success {
+    background: rgba(108, 63, 197, 0.06);
+    border: 1px solid rgba(108, 63, 197, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 20px 24px;
+}
+
+.form-success h3 {
+    font-family: 'Nunito', sans-serif;
+    color: var(--primary);
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
+}
+
+.form-success p {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.form-error {
+    background: rgba(229, 62, 62, 0.06);
+    border: 1px solid rgba(229, 62, 62, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    color: #c53030;
+    font-size: 0.92rem;
+    font-weight: 500;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
