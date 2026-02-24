@@ -76,17 +76,17 @@ function initFormValidation() {
         ];
 
         let errorMessage = '';
+
         for (let i = 0; i < fields.length; i++) {
             if (fields[i].value === '') {
-                errorMessage = `Будь ласка, заповніть поле: "${fields[i].name}"`;
+                errorMessage = 'Будь ласка, заповніть поле: "' + fields[i].name + '"';
                 break;
             }
         }
 
-        
         if (!errorMessage && date) {
             const parts = date.split('-');
-            const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+            const selectedDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             if (selectedDate < today) {
@@ -94,9 +94,8 @@ function initFormValidation() {
             }
         }
 
-        
         if (!errorMessage && description.length > 300) {
-            errorMessage = `Опис занадто довгий (${description.length}/300 символів). Скоротіть текст.`;
+            errorMessage = 'Опис занадто довгий (' + description.length + '/300 символів). Скоротіть текст.';
         }
 
         const resultBox = document.getElementById('form-result');
