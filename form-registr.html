@@ -1,0 +1,154 @@
+<!DOCTYPE html> 
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація волонтера | ВО Єдність</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <img src="logo1.png" alt="Логотип організації Єдність" width="100">
+        <h1>Волонтерська організація Єдність</h1>
+        <nav>
+            <ul>
+                <li><a href="projects.html">Доступні ініціативи</a></li>
+                <li><a href="my-projects.html">Мої ініціативи</a></li>
+                <li><a href="index.html">Про нас</a></li>
+                <li><a href="form-initiative.html">Створити ініціативу</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="create-initiative-section">
+            <h2>Реєстрація волонтера</h2>
+            <p>Заповніть форму нижче, щоб стати волонтером події. Ми зв'яжемося з вами для подальших кроків.</p>
+
+            <!-- Назва ініціативи підтягується автоматично через JS -->
+            <div id="initiative-info"></div>
+
+            <form class="registration-form initiative-form">
+                <div class="form-group">
+                    <label for="name">Ім'я:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="surname">Прізвище:</label>
+                    <input type="text" id="surname" name="surname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Електронна пошта:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефону:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <button type="submit" class="submit-btn">Зареєструватися</button>
+            </form>
+
+            <div id="form-result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo"><img src="logo1.png" alt="Лого"></div>
+            <div class="footer-info">
+                <p><strong>ВО "Єдність"</strong></p>
+                <p>м. Київ, вул. Волонтерська, 10</p>
+                <p><a href="mailto:info@unity.org.ua">info@unity.org.ua</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 ВО "Єдність"</div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Читаємо id ініціативи з URL: ?id=count-0
+        const params = new URLSearchParams(window.location.search);
+        const initiativeId = params.get('id');
+
+        // Показуємо назву ініціативи якщо id є
+        const initiative = allInitiatives.find(item => item.id === initiativeId);
+        const infoBlock = document.getElementById('initiative-info');
+        if (initiative) {
+            infoBlock.innerHTML = `
+                <div class="joined-badge" style="margin-bottom: 20px; font-size: 0.95rem; padding: 10px 18px;">
+                    📋 Ви реєструєтесь на: <strong>${initiative.title}</strong>
+                </div>
+            `;
+        }
+
+        // Валідація і збереження форми
+        const form = document.querySelector('.registration-form');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const surname = document.getElementById('surname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            const fields = [
+                { value: name, name: "Ім'я" },
+                { value: surname, name: 'Прізвище' },
+                { value: email, name: 'Електронна пошта' },
+                { value: phone, name: 'Номер телефону' }
+            ];
+
+            let errorMessage = '';
+            for (let i = 0; i < fields.length; i++) {
+                if (fields[i].value === '') {
+                    errorMessage = `Будь ласка, заповніть поле: "${fields[i].name}"`;
+                    break;
+                }
+            }
+
+            const resultBox = document.getElementById('form-result');
+
+            if (errorMessage) {
+                resultBox.innerHTML = `<div class="form-error">⚠️ ${errorMessage}</div>`;
+                return;
+            }
+
+            // Якщо є id ініціативи — зберігаємо її в MyProject і joinedIds
+            if (initiativeId && initiative) {
+                const MyProject = JSON.parse(localStorage.getItem('MyProject')) || [];
+                if (!MyProject.includes(initiative.title)) {
+                    MyProject.push(initiative.title);
+                    localStorage.setItem('MyProject', JSON.stringify(MyProject));
+                }
+
+                const joinedIds = getJoinedIds();
+                if (!joinedIds.includes(initiativeId)) {
+                    joinedIds.push(initiativeId);
+                    localStorage.setItem('joinedIds', JSON.stringify(joinedIds));
+                }
+
+                const volunteersCount = getVolunteersCount();
+                if (volunteersCount[initiativeId] === undefined) {
+                    volunteersCount[initiativeId] = Math.max(0, initiative.volunteers - 1);
+                } else {
+                    volunteersCount[initiativeId] = Math.max(0, volunteersCount[initiativeId] - 1);
+                }
+                localStorage.setItem('volunteersCount', JSON.stringify(volunteersCount));
+            }
+
+            resultBox.innerHTML = `
+                <div class="form-success">
+                    <h3>✅ Реєстрацію підтверджено!</h3>
+                    <p><strong>Ім'я:</strong> ${name} ${surname}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Телефон:</strong> ${phone}</p>
+                    ${initiative ? `<p><strong>Ініціатива:</strong> ${initiative.title}</p>` : ''}
+                    <p style="margin-top: 14px;">Картка з'явилась у розділі <a href="my-projects.html" style="color: var(--accent); font-weight: 600;">Мої ініціативи</a> 🎉</p>
+                </div>
+            `;
+            form.reset();
+            form.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
