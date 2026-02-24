@@ -376,6 +376,8 @@ footer::before {
     letter-spacing: 0.02em;
 }
 
+/* ===== МОЇ ІНІЦІАТИВИ ===== */
+
 .my-initiatives-section {
     max-width: 1200px;
     margin: 0 auto;
@@ -496,10 +498,14 @@ footer::before {
     color: var(--primary);
 }
 
+/* ===== АНІМАЦІЇ ===== */
+
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ===== АДАПТИВ ===== */
 
 @media (max-width: 768px) {
     header {
@@ -539,6 +545,15 @@ footer::before {
         font-size: 0.78rem !important;
     }
 }
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 260px;
+    overflow-y: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
 
 .char-counter {
     text-align: right;
@@ -551,10 +566,4 @@ footer::before {
 .char-counter--over {
     color: #e53e3e;
     font-weight: 600;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-    max-height: 260px;
 }
