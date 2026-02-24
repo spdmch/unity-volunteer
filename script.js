@@ -13,6 +13,95 @@ function getVolunteersCount() {
     return JSON.parse(localStorage.getItem('volunteersCount')) || {};
 }
 
+function applyCardStyles() {
+    const cards = document.querySelectorAll('.card');
+    for (let i = 0; i < cards.length; i++) {
+        if (i % 2 === 0) {
+            cards[i].style.borderLeft = '3px solid var(--accent)';
+        } else {
+            cards[i].style.borderLeft = '3px solid var(--accent-light)';
+        }
+    }
+}
+
+function addNavHoverEffects() {
+    const navLinks = document.querySelectorAll('nav ul li a');
+    for (let i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener('mouseover', function () {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(-2px)';
+            }
+        });
+        navLinks[i].addEventListener('mouseout', function () {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+    }
+}
+
+function initToggleSection() {
+    const toggleBtn = document.getElementById('toggle-about-btn');
+    const aboutSection = document.getElementById('about');
+    if (!toggleBtn || !aboutSection) return;
+
+    toggleBtn.addEventListener('click', function () {
+        if (aboutSection.style.display === 'none') {
+            aboutSection.style.display = 'block';
+            toggleBtn.textContent = 'Приховати інформацію ▲';
+        } else {
+            aboutSection.style.display = 'none';
+            toggleBtn.textContent = 'Показати інформацію ▼';
+        }
+    });
+}
+
+function initFormValidation() {
+    const form = document.querySelector('.initiative-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const title = document.getElementById('title').value.trim();
+        const date = document.getElementById('date').value.trim();
+        const location = document.getElementById('location').value.trim();
+        const description = document.getElementById('description').value.trim();
+
+        const fields = [
+            { value: title, name: 'Назва ініціативи' },
+            { value: date, name: 'Дата проведення' },
+            { value: location, name: 'Місце проведення' },
+            { value: description, name: 'Опис ініціативи' }
+        ];
+
+        let errorMessage = '';
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i].value === '') {
+                errorMessage = `Будь ласка, заповніть поле: "${fields[i].name}"`;
+                break;
+            }
+        }
+
+        const resultBox = document.getElementById('form-result');
+
+        if (errorMessage) {
+            resultBox.innerHTML = `<div class="form-error">⚠️ ${errorMessage}</div>`;
+        } else {
+            resultBox.innerHTML = `
+                <div class="form-success">
+                    <h3>✅ Ініціативу надіслано!</h3>
+                    <p><strong>Назва:</strong> ${title}</p>
+                    <p><strong>Дата:</strong> ${date}</p>
+                    <p><strong>Місце:</strong> ${location}</p>
+                    <p><strong>Опис:</strong> ${description}</p>
+                </div>
+            `;
+            form.reset();
+        }
+    });
+}
+
 function filterProjects(status) {
     const btnActive = document.getElementById('btn-active');
     const btnCompleted = document.getElementById('btn-completed');
@@ -44,7 +133,7 @@ function filterProjects(status) {
             } else if (isJoined) {
                 buttonHtml = `<button class="join-btn" disabled style="background: #816d90;">Ви приєдналися</button>`;
             } else {
-                buttonHtml = `<button class="join-btn" onclick="joinWithCounter(this, '${item.id}')">Приєднатися</button>`;
+                buttonHtml = `<button class="join-btn" onclick="window.location.href='form-registr.html?id=${item.id}';">Приєднатися</button>`;
             }
 
             let card = document.createElement('article');
@@ -62,6 +151,18 @@ function filterProjects(status) {
         }
 
         i++;
+    }
+
+    applyCardStyles();
+
+    const cards = document.querySelectorAll('.card');
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('mouseover', function () {
+            this.style.boxShadow = '0 12px 32px rgba(108, 63, 197, 0.25)';
+        });
+        cards[i].addEventListener('mouseout', function () {
+            this.style.boxShadow = '';
+        });
     }
 }
 
@@ -150,6 +251,8 @@ function displayMyInitiatives() {
         container.appendChild(card);
         i++;
     }
+
+    applyCardStyles();
 }
 
 function removeFromList(index) {
@@ -176,9 +279,15 @@ function removeFromList(index) {
 
 window.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('projects-container')) {
-        filterProjects('active'); 
+        filterProjects('active');
     }
     if (document.getElementById('myList')) {
         displayMyInitiatives();
     }
+
+    addNavHoverEffects();
+
+    initToggleSection();
+
+    initFormValidation();
 });
