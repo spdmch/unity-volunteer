@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доступні ініціативи | ВО Єдність</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .card-title-row h3 {
+            margin: 0;
+            flex: 1;
+        }
+        .heart-btn {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 2px 4px;
+            line-height: 1;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .heart-btn:hover { transform: scale(1.2); }
+    </style>
 </head>
 <body>
 
@@ -17,6 +40,7 @@
             <li><a href="my-projects.html">Мої ініціативи</a></li>
             <li><a href="index.html">Про нас</a></li>
             <li><a href="form-initiative.html">Створити ініціативу</a></li>
+            <li><a href="favorites.html">Улюблені ініціативи</a></li>
         </ul>
     </nav>
 </header>
@@ -24,12 +48,11 @@
 <main>
     <section class="initiatives-header" style="text-align: center;">
         <h2>Доступні ініціативи</h2>
-    <div class="filter-controls">
-    <button id="btn-active" onclick="filterProjects('active')" class="filter-btn">Актуальні</button>
-    <button id="btn-completed" onclick="filterProjects('completed')" class="filter-btn">Завершені</button>
-</div>
+        <div class="filter-controls">
+            <button id="btn-active" onclick="filterProjects('active')" class="filter-btn">Актуальні</button>
+            <button id="btn-completed" onclick="filterProjects('completed')" class="filter-btn">Завершені</button>
+        </div>
     </section>
-
     <div id="projects-container" class="initiatives-grid"></div>
 </main>
 
@@ -44,10 +67,5 @@
 </footer>
 
 <script src="script.js"></script>
-<script>
-    window.onload = function() {
-        filterProjects('active');
-    };
-</script>
 </body>
 </html>
